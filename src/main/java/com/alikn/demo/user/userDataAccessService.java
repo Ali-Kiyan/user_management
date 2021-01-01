@@ -2,6 +2,7 @@ package com.alikn.demo.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +19,12 @@ public class userDataAccessService {
 
     public List<User> selectAllUsers() {
         String sql = "SELECT first_name, last_name, email, gender FROM app_user";
-        List<User> users = jdbcTemplate.query(sql, (resultSet, i) -> {
+        List<User> users = jdbcTemplate.query(sql, mapUserFromDB());
+        return users;
+    }
+
+    private RowMapper<User> mapUserFromDB() {
+        return (resultSet, i) -> {
             String userIdStr = resultSet.getString("user_id");
             UUID userId = UUID.fromString(userIdStr);
             String firstName = resultSet.getString("first_name");
@@ -27,7 +33,6 @@ public class userDataAccessService {
             String genderStr = resultSet.getString("gender").toUpperCase();
             User.Gender gender = User.Gender.valueOf(genderStr);
             return new User(userId, firstName, lastName, email, gender);
-        });
-        return users;
+        };
     }
 }

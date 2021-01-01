@@ -1,19 +1,23 @@
 package com.alikn.demo.user;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 // Instantiate to get injected into User Controller
 //@Component
 @Service
 public class UserService {
+    private final userDataAccessService userDataAccessService;
+
+    @Autowired
+    public UserService(com.alikn.demo.user.userDataAccessService userDataAccessService) {
+        this.userDataAccessService = userDataAccessService;
+    }
 
     public List<User> getAllUsers(){
-        return List.of(new User(UUID.randomUUID(), "David", "Roberts", "Davidroberts@gmail.com", User.Gender.MALE),
-                new User(UUID.randomUUID(), "Audrey", "Johnson", "Audreyjohnson@gmail.com", User.Gender.FEMALE));
+        return userDataAccessService.selectAllUsers();
     }
 
 }

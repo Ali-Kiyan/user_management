@@ -1,5 +1,7 @@
 package com.alikn.demo.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -7,8 +9,25 @@ import java.util.UUID;
 
 @Repository
 public class userDataAccessService {
-    public List<User> selectAllUsers(){
-        return List.of(new User(UUID.randomUUID(), "David", "Roberts", "Davidroberts@gmail.com", User.Gender.MALE),
-                new User(UUID.randomUUID(), "Audrey", "Johnson", "Audreyjohnson@gmail.com", User.Gender.FEMALE));
+    @Autowired
+    private final JdbcTemplate jdbcTemplate;
+
+    public userDataAccessService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    public List<User> selectAllUsers() {
+        String sql = "SELECT first_name, last_name, email, gender FROM app_user";
+        List<User> users = jdbcTemplate.query(sql, (resultSet, i) -> {
+            String userIdStr = resultSet.getString("user_id");
+            UUID userId = UUID.fromString(userIdStr);
+            String firstName = resultSet.getString("first_name");
+            String lastName = resultSet.getString("last_name");
+            String email = resultSet.getString("email");
+            String genderStr = resultSet.getString("gender").toUpperCase();
+            User.Gender gender = User.Gender.valueOf(genderStr);
+            return new User(userId, firstName, lastName, email, gender);
+        });
+        return users;
     }
 }

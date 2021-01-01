@@ -1,5 +1,6 @@
 package com.alikn.demo.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,9 +10,17 @@ import java.util.UUID;
 @RestController
 @RequestMapping("users")
 public class UserController {
+
+    private final UserService userService;
+
+    //Dependency Injection
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping
     public List<User> getAllUsers(){
-        return List.of(new User(UUID.randomUUID(), "David", "Roberts", "Davidroberts@gmail.com", User.Gender.MALE),
-                new User(UUID.randomUUID(), "Audrey", "Johnson", "Audreyjohnson@gmail.com", User.Gender.FEMALE));
+        return userService.getAllUsers();
     }
 }

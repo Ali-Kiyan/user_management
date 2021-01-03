@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../utils/utils";
-import { Table, Avatar, Spin } from "antd";
-import { LoadingOutlined } from '@ant-design/icons';
+import { Table, Avatar, Spin, Modal, Button, Input } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import UserForm from '../utils/forms/UserForm'
 
-const getAntIcon = () => <LoadingOutlined type="loading" style={{ fontSize: 24 }}></LoadingOutlined>;
+const getAntIcon = () => (
+  <LoadingOutlined type="loading" style={{ fontSize: 24 }}></LoadingOutlined>
+);
 
 const User = (props) => {
   const [users, setUsers] = useState();
   const [isLoading, setLoading] = useState(false);
+  const [isAddUserModalVisible, setAddUserModal] = useState(false);
+
+  const openAddUserModal = () => {
+    setAddUserModal(true);
+  };
+  const closeAddUserModal = () => {
+    setAddUserModal(false);
+  };
   const cols = [
     {
       title: "",
@@ -52,23 +63,42 @@ const User = (props) => {
   }, []);
   const renderTable = () => {
     if (isLoading) {
-      return (
-        <Spin
-          indicator={getAntIcon()}
-        ></Spin>
-      );
+      return <Spin indicator={getAntIcon()}></Spin>;
     } else {
       return (
-        <Table
-          dataSource={users}
-          columns={cols}
-          rowKey="userId"
-          style={{
-            width: "80%",
-            margin: "0 auto",
-          }}
-          pagination={false}
-        ></Table>
+        <>
+          <Avatar
+            style={{
+              backgroundColor: "#f56a00",
+              margin: "2% 0.5% 2% 10%",
+            }}
+            size="large"
+          >
+            10
+          </Avatar>{" "}
+          <Button type="primary" onClick={() => openAddUserModal()}>
+            Add new user
+          </Button>
+          <Table
+            dataSource={users}
+            columns={cols}
+            rowKey="userId"
+            style={{
+              width: "80%",
+              margin: "0 auto",
+            }}
+            pagination={false}
+          ></Table>
+          <Modal
+            title="Add new User"
+            visible={isAddUserModalVisible}
+            onOk={closeAddUserModal}
+            onCancel={closeAddUserModal}
+            width={"70%"}
+          >
+            <UserForm></UserForm>
+          </Modal>
+        </>
       );
     }
   };

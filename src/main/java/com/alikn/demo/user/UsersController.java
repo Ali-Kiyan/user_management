@@ -1,5 +1,6 @@
 package com.alikn.demo.user;
 
+import com.alikn.demo.exception.ApiRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class UsersController {
 
     @GetMapping
     public List<User> getAllUsers(){
-        throw new IllegalStateException("fadsfadsfadsfasdfadsfasdf asfsdfas");
+        throw new ApiRequestException("users cannot found");
 //        return userService.getAllUsers();
     }
 

@@ -35,7 +35,7 @@ class UserForm extends React.Component {
           return errors;
         }}
         onSubmit={(formValues, { setSubmitting }) => {
-          console.log(formValues);
+          this.props.onSuccess();
           postData("user", formValues).then(() => {
             setSubmitting(false);
           });

@@ -96,7 +96,9 @@ const User = (props) => {
             onCancel={closeAddUserModal}
             width={"70%"}
           >
-            <UserForm></UserForm>
+            <UserForm onSuccess={()=>{
+              closeAddUserModal();
+            }}></UserForm>
           </Modal>
         </>
       );

@@ -17,8 +17,8 @@ public class userDataAccessService {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public List<User> selectAllUsers() {
-        String sql = "SELECT first_name, last_name, email, gender FROM app_user";
+    List<User> selectAllUsers() {
+        String sql = "SELECT user_id, first_name, last_name, email, gender FROM app_user";
         List<User> users = jdbcTemplate.query(sql, mapUserFromDB());
         return users;
     }

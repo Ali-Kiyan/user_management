@@ -1,5 +1,7 @@
 package com.alikn.demo.user;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.UUID;
 
 public class User {
@@ -29,11 +31,11 @@ public class User {
         return gender;
     }
 
-    public User(UUID userId,
-                String firstName,
-                String lastName,
-                String email,
-                Gender gender) {
+    public User(@JsonProperty("userId") UUID userId,
+                @JsonProperty("firstName")String firstName,
+                @JsonProperty("lastName")String lastName,
+                @JsonProperty("email")String email,
+                @JsonProperty("gender")Gender gender) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;

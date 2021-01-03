@@ -3,20 +3,27 @@ package com.alikn.demo.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
-@RequestMapping("user")
-public class UserController {
+@RequestMapping("users")
+public class UsersController {
 
     private final UserService userService;
 
+    //Dependency Injection
     @Autowired
-    public UserController(UserService userService) {
+    public UsersController(UserService userService) {
         this.userService = userService;
+    }
+
+    @GetMapping
+    public List<User> getAllUsers(){
+        return userService.getAllUsers();
     }
 
     @PostMapping
     public void addNewUser(@RequestBody User user){
-        System.out.println("Hi");
+
     }
 }

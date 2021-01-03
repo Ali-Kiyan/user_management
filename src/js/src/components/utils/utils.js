@@ -1,14 +1,25 @@
 
-const getData = (url) => {
-  return fetch(`/${url}`,{
+const getData = url => fetch(`/${url}`,{
     method: 'GET', 
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    mode: 'cors', 
+    cache: 'no-cache', 
     headers: {
       'Content-Type': 'application/json'
-    }}).then(data=>data.json());
+    }}).then(res=>res.json());
+
+const postData = (url, data) => {
+  return fetch(`/${url}`,{
+    method: 'POST', 
+    mode: 'cors',
+    cache: 'no-cache',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  }).then(res=>res.json());
 }
 
 export {
-  getData
+  getData,
+  postData
 }

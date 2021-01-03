@@ -22,8 +22,4 @@ public class UsersController {
         return userService.getAllUsers();
     }
 
-    @PostMapping
-    public void addNewUser(@RequestBody User user){
-
-    }
 }

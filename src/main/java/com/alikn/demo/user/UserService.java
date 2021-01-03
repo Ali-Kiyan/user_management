@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 // Instantiate to get injected into User Controller
 //@Component
@@ -16,8 +18,16 @@ public class UserService {
         this.userDataAccessService = userDataAccessService;
     }
 
-    public List<User> getAllUsers(){
+    List<User> getAllUsers() {
         return userDataAccessService.selectAllUsers();
     }
 
+    void addNewUser(UUID userId, User user) {
+        UUID newUserId = Optional.ofNullable(userId).orElse(UUID.randomUUID());
+        userDataAccessService.insertUser(newUserId, user);
+    }
+
+    void addNewUser(User user) {
+        addNewUser(null, user);
+    }
 }

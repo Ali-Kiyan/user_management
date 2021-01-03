@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import { Input, Button } from "antd";
+import { postData } from "../utils";
 
 const margin = {
   margin: "1% 0",
@@ -10,7 +11,7 @@ class UserForm extends React.Component {
   render() {
     return (
       <Formik
-        initialValues={{ email: "", firstName: "", lastName: "", gender: "" }}
+        initialValues={{ firstName: "", lastName: "", email: "", gender: "" }}
         validate={(values) => {
           const errors = {};
           if (!values.email) {
@@ -28,16 +29,16 @@ class UserForm extends React.Component {
           }
           if (!values.gender) {
             errors.gender = "Gender Required";
-          }else if(!["MALE", "FEMALE", "male", "female"].includes(values.gender)){
-              errors.gender = 'Gender must be ("MALE", "FEMALE", "male", "female")'
+          } else if (!["MALE", "FEMALE"].includes(values.gender)) {
+            errors.gender = 'Gender must be ("MALE", "FEMALE")';
           }
           return errors;
         }}
-        onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
+        onSubmit={(formValues, { setSubmitting }) => {
+          console.log(formValues);
+          postData("user", formValues).then(() => {
             setSubmitting(false);
-          }, 400);
+          });
         }}
       >
         {({
@@ -48,7 +49,7 @@ class UserForm extends React.Component {
           handleBlur,
           handleSubmit,
           isSubmitting,
-          submitForm
+          submitForm,
         }) => (
           <form onSubmit={handleSubmit}>
             <Input
@@ -89,7 +90,11 @@ class UserForm extends React.Component {
               placeholder="Gender"
             />
             {errors.gender && touched.gender && errors.gender}
-            <Button type="submit" disabled={isSubmitting} onClick={()=>submitForm()}>
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              onClick={() => submitForm()}
+            >
               Submit
             </Button>
           </form>

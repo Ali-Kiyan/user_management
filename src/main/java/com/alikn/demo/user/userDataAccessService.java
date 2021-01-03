@@ -35,4 +35,16 @@ public class userDataAccessService {
             return new User(userId, firstName, lastName, email, gender);
         };
     }
+
+    int insertUser(UUID userId, User user) {
+        String query = "INSERT INTO app_user (user_id, first_name, last_name, email, gender) VALUES (?,?,?,?,?)";
+        return jdbcTemplate.update(
+                query,
+                userId,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                user.getGender().name().toUpperCase()
+        );
+    }
 }

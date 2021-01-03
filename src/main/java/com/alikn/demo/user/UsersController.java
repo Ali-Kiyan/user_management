@@ -20,8 +20,7 @@ public class UsersController {
 
     @GetMapping
     public List<User> getAllUsers(){
-        throw new ApiRequestException("users cannot found");
-//        return userService.getAllUsers();
+        return userService.getAllUsers();
     }
 
 }

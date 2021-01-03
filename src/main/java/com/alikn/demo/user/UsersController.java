@@ -19,7 +19,8 @@ public class UsersController {
 
     @GetMapping
     public List<User> getAllUsers(){
-        return userService.getAllUsers();
+        throw new IllegalStateException("fadsfadsfadsfasdfadsfasdf asfsdfas");
+//        return userService.getAllUsers();
     }
 
 }

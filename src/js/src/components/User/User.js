@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../utils/utils";
 import { Table, Avatar, Spin, Modal, Button, Input } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import UserForm from '../utils/forms/UserForm'
+import UserForm from "./UserForm";
+import { errorNotification } from "../utils/notification";
 
 const getAntIcon = () => (
   <LoadingOutlined type="loading" style={{ fontSize: 24 }}></LoadingOutlined>
@@ -55,9 +56,15 @@ const User = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const users = await getData("users");
-      setUsers(users);
-      setLoading(false);
+      try {
+        const users = await getData("users");
+        setUsers(users);
+        setLoading(false);
+      } catch (error) {
+        const title = error.message.message;
+        const message = error.message.error;
+        errorNotification(message, title)
+      }
     };
     fetchData();
   }, []);
@@ -96,9 +103,11 @@ const User = (props) => {
             onCancel={closeAddUserModal}
             width={"70%"}
           >
-            <UserForm onSuccess={()=>{
-              closeAddUserModal();
-            }}></UserForm>
+            <UserForm
+              onSuccess={() => {
+                closeAddUserModal();
+              }}
+            ></UserForm>
           </Modal>
         </>
       );

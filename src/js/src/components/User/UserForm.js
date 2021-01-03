@@ -1,13 +1,17 @@
 import React from "react";
 import { Formik } from "formik";
 import { Input, Button } from "antd";
-import { postData } from "../utils";
+import { postData } from "../utils/utils";
+import { errorNotification } from '../utils/notification'
 
 const margin = {
   margin: "1% 0",
 };
 
 class UserForm extends React.Component {
+  state = {
+    isFetching: false
+  }
   render() {
     return (
       <Formik
@@ -36,8 +40,21 @@ class UserForm extends React.Component {
         }}
         onSubmit={(formValues, { setSubmitting }) => {
           this.props.onSuccess();
+          this.setState({
+            isFetching: true
+          })
           postData("user", formValues).then(() => {
+            this.setState({
+              isFetching: false
+            })
             setSubmitting(false);
+          }).catch(error=>{
+            const title = error.message.message;
+            const message = error.message.error;
+            errorNotification(message, title)
+            this.setState({
+              isFetching: false
+            })
           });
         }}
       >

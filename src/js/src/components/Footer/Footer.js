@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'antd'
-import Avatar from 'antd/lib/avatar/avatar';
+
 
 
 const Footer = (props) =>{

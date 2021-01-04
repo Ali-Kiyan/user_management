@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../utils/utils";
-import { Table, Avatar, Spin, Modal, Button, Input } from "antd";
+import { Table, Avatar, Spin, Modal, Button } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import UserForm from "./UserForm";
 import { errorNotification } from "../utils/notification";

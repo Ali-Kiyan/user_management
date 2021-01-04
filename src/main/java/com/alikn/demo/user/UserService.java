@@ -31,6 +31,9 @@ public class UserService {
         if(!emailValidator.test(user.getEmail())){
             throw new ApiRequestException(user.getEmail() + " is not Valid");
         }
+        if(userDataAccessService.isEmailTaken(user.getEmail())){
+            throw new ApiRequestException(user.getEmail() + " is taken");
+        }
         userDataAccessService.insertUser(newUserId, user);
     }
 

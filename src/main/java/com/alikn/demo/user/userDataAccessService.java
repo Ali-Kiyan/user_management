@@ -47,4 +47,10 @@ public class userDataAccessService {
                 user.getGender().name().toUpperCase()
         );
     }
+
+    @SuppressWarnings("ConstantConditions")
+    boolean isEmailTaken(String email) {
+        String query = "SELECT EXISTS (SELECT 1 FROM app_user WHERE email = ?)";
+        return jdbcTemplate.queryForObject(query, new Object[] {email},(resultSet,i)->resultSet.getBoolean(1));
+    }
 }

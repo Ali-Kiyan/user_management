@@ -37,7 +37,7 @@ public class userDataAccessService {
     }
 
     int insertUser(UUID userId, User user) {
-        String query = "INSERT INTO app_user (user_id, first_name, last_name, email, gender) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO app_user (user_id, first_name, last_name, email, gender) VALUES (?,?,?,?,?::gender)";
         return jdbcTemplate.update(
                 query,
                 userId,

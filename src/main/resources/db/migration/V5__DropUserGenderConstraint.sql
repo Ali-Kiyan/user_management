@@ -1,0 +1,1 @@
+ALTER TABLE app_user DROP CONSTRAINT IF EXISTS app_user_gender_check;

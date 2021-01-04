@@ -40,4 +40,10 @@ public class UserService {
     void addNewUser(User user) {
         addNewUser(null, user);
     }
+
+    List<UserTopic> getAllTopicsForUser(UUID userId){
+        return userDataAccessService.selectAllUserTopics(userId);
+    }
+
+
 }

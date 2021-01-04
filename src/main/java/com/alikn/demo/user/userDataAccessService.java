@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -51,6 +52,51 @@ public class userDataAccessService {
     @SuppressWarnings("ConstantConditions")
     boolean isEmailTaken(String email) {
         String query = "SELECT EXISTS (SELECT 1 FROM app_user WHERE email = ?)";
-        return jdbcTemplate.queryForObject(query, new Object[] {email},(resultSet,i)->resultSet.getBoolean(1));
+        return jdbcTemplate.queryForObject(query, new Object[]{email}, (resultSet, i) -> resultSet.getBoolean(1));
     }
+
+
+    public List<UserTopic> selectAllUserTopics(UUID userId) {
+        String query = "SELECT app_user.user_id, " +
+                "topic.topic_id, " +
+                "topic.name, " +
+                "topic.description, " +
+                "topic.category, " +
+                "user_topic.subscription_date, " +
+                "user_topic.rate, " +
+                "user_topic " +
+                "FROM app_user " +
+                "INNER JOIN user_topic using (user_id) " +
+                "INNER JOIN topic using (topic_id) " +
+                "WHERE app_user.user_id= ? ";
+        return jdbcTemplate.query(
+                query,
+                new Object[]{userId},
+                mapUserTopicsFromDb()
+        );
+    }
+
+    private RowMapper<UserTopic> mapUserTopicsFromDb() {
+        return (resultSet, i) ->
+                new UserTopic(
+                        UUID.fromString(resultSet.getString("user_id")),
+                        UUID.fromString(resultSet.getString("topic_id")),
+                        resultSet.getDate("subscription_date").toLocalDate(),
+                        Optional.ofNullable(resultSet.getString("rate"))
+                                .map(Integer::parseInt)
+                                .orElse(null),
+                        resultSet.getString("name"),
+                        resultSet.getString("description"),
+                        resultSet.getString("category")
+                );
+
+    }
+//        String userIdStr = resultSet.getString("user_id");
+//        UUID userId = UUID.fromString(userIdStr);
+//
+//        String firstName = resultSet.getString("first_name");
+//        String lastName = resultSet.getString("last_name");
+//        String email = resultSet.getString("email");
+//        String genderStr = resultSet.getString("gender".toUpperCase())
+//}
 }

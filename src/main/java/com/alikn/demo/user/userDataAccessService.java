@@ -91,12 +91,4 @@ public class userDataAccessService {
                 );
 
     }
-//        String userIdStr = resultSet.getString("user_id");
-//        UUID userId = UUID.fromString(userIdStr);
-//
-//        String firstName = resultSet.getString("first_name");
-//        String lastName = resultSet.getString("last_name");
-//        String email = resultSet.getString("email");
-//        String genderStr = resultSet.getString("gender".toUpperCase())
-//}
 }

@@ -1,0 +1,1 @@
+ALTER TABLE topic ALTER category SET NOT NULL;

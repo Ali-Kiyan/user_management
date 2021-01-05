@@ -35,4 +35,5 @@ build/
 ### application config ###
 /src/main/resources/application.yml
 
-/src/js/src/.eslintcache
+/src/js/.eslintcache
+/src/js/node_modules

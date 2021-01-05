@@ -1,0 +1,11 @@
+
+error:
+  include-message: always
+  include-binding-errors: always
+
+app:
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/user_demo
+    username: postgres
+    password: pass
+    pool-size: 30

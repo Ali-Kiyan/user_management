@@ -8,7 +8,7 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("api/user")
 public class UserController {
 
     private final UserService userService;
@@ -22,7 +22,7 @@ public class UserController {
         userService.addNewUser(user);
     }
 
-    @GetMapping(path = "{user_id}/topics")
+    @GetMapping(path = "api/{user_id}/topics")
     public List<UserTopic> getAllTopicsForUser(@PathVariable("user_id") UUID userId){
         return userService.getAllTopicsForUser(userId);
     }

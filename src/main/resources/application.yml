@@ -1,3 +1,6 @@
+spring:
+  profiles:
+    active: @spring.profiles.active@
 
 error:
   include-message: always

@@ -2,7 +2,6 @@ const checkStatus = async(response) => {
   if (response.ok) {
     return response;
   } else {
-    console.log(response)
     let error = new Error(response.statusText);
     error.response = response;
     const message = await response.json();
@@ -12,7 +11,7 @@ const checkStatus = async(response) => {
 };
 
 const getData = (url) =>
-  fetch(`/${url}`, {
+  fetch(`api/${url}`, {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
@@ -22,7 +21,7 @@ const getData = (url) =>
   }).then(checkStatus).then((res) => res.json());
 
 const postData = (url, data) => {
-  return fetch(`/${url}`, {
+  return fetch(`api/${url}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",

@@ -29,7 +29,7 @@ const postData = (url, data) => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
-  }).then(checkStatus).then((res) => res.json());
+  }).then(checkStatus);
 };
 
 export { getData, postData };

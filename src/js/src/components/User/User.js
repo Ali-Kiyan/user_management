@@ -61,9 +61,15 @@ const User = (props) => {
         setUsers(users);
         setLoading(false);
       } catch (error) {
-        const title = error.message.message;
-        const message = error.message.error;
-        errorNotification(message, title)
+        if(error.message.message){
+          const title = error.message.message;
+          const message = error.message.error;
+          errorNotification(title, message)
+        }else if(error.message){
+          const title = "Error";
+          const message = error.message;
+          errorNotification(title, message)
+        }
       }
     };
     fetchData();
@@ -74,15 +80,6 @@ const User = (props) => {
     } else {
       return (
         <>
-          <Avatar
-            style={{
-              backgroundColor: "#f56a00",
-              margin: "2% 0.5% 2% 10%",
-            }}
-            size="large"
-          >
-            10
-          </Avatar>{" "}
           <Button type="primary" onClick={() => openAddUserModal()}>
             Add new user
           </Button>

@@ -49,9 +49,16 @@ class UserForm extends React.Component {
             })
             setSubmitting(false);
           }).catch(error=>{
-            const title = error.message.message;
-            const message = error.message.error;
-            errorNotification(message, title)
+            if(error.message.message){
+              const title = error.message.message;
+              const message = error.message.error;
+              errorNotification(title, message)
+            }else if(error.message){
+              const title = "Error";
+              const message = error.message;
+              errorNotification(title, message)
+              
+            }
             this.setState({
               isFetching: false
             })
